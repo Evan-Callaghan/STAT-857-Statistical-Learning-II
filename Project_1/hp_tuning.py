@@ -11,8 +11,10 @@ from sklearn.model_selection import train_test_split
 data = pd.read_csv('Data/W23P1_train_final.csv')
 
 ## Defining the input and target variables
-X = data.drop(columns = ['fare_amount'])
+X = data[['distance', 'haversine', 'dropoff_longitude', 'duration', 'pickup_longitude', 'dropoff_EWR', 'EWR', \
+          'dropoff_airport', 'pickup_airport', 'dropoff_JFK']]
 Y = data['fare_amount']
+
 
 ## Splitting the data into train and validation sets
 X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size = 0.3)
