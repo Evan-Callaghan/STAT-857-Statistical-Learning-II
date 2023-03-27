@@ -11,7 +11,10 @@ from sklearn.model_selection import train_test_split
 data = pd.read_csv('Data/W23P1_training_new.csv')
 
 ## Defining the input and target variables
-X = data.drop(columns = ['fare_amount'])
+variables = ['distance', 'duration', 'haversine', 'time_estimate', 'pickup_longitude', 'pickup_latitude', 'dropoff_longitude', 
+             'dropoff_latitude', 'dropoff_other', 'change_borough', 'LGA']
+
+X = data[variables]
 Y = data['fare_amount']
 
 ## Splitting the data into train and validation sets
@@ -114,7 +117,7 @@ def lgbm_reg_objective(trial):
 ## ----
 ## Creating a study object and to optimize the home objective function
 study_rf = optuna.create_study(direction = 'minimize')
-study_rf.optimize(rf_reg_objective, n_trials = 500)
+study_rf.optimize(rf_reg_objective, n_trials = 50)
 
 ## Starting HistGradientBoosting
 ## ----
