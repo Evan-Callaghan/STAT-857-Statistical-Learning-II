@@ -14,11 +14,19 @@ data = pd.read_csv('Data/W23P1_training_new.csv')
 variables = ['distance', 'duration', 'haversine', 'time_estimate', 'pickup_longitude', 'pickup_latitude', 'dropoff_longitude', 
              'dropoff_latitude', 'dropoff_other', 'change_borough', 'LGA']
 
-X = data[variables]
+X = data.drop(columns = ['uid', 'fare_amount', 'pickup_datetime', 
+                         'passenger_count', 'distance', 'duration', 'haversine', 'same_lat', 'same_long', 'same_coord', 'pickup_longitude_rounded', 
+                         'pickup_latitude_rounded', 'dropoff_longitude_rounded', 'dropoff_latitude_rounded', 'same_lat_rounded', 'same_long_rounded', 
+                         'same_coord_rounded', 'pickup_date', 'pickup_day', 'pickup_hour', 'pickup_day_of_week', 'Friday', 'Monday', 'Saturday', 'Sunday', 
+                         'Thursday', 'Tuesday', 'Wednesday', 'weekend', 'morning', 'rush_hour', 'overnight', 'holiday', 'pickup_LGA', 'dropoff_LGA', 'LGA', 
+                         'pickup_JFK', 'dropoff_JFK', 'JFK', 'pickup_EWR', 'dropoff_EWR', 'EWR', 'pickup_airport', 'dropoff_airport', 'airport', 'pickup_borough', 
+                         'dropoff_borough', 'change_borough', 'pickup_bronx', 'pickup_brooklyn', 'pickup_manhattan', 'pickup_other', 'pickup_queens', 
+                         'pickup_staten_island', 'dropoff_bronx', 'dropoff_brooklyn', 'dropoff_manhattan', 'dropoff_other', 'dropoff_queens', 
+                         'dropoff_staten_island'])
 Y = data['fare_amount']
 
 ## Splitting the data into train and validation sets
-X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size = 0.3)
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, Y, test_size = 0.75)
 
 ## Defining Optuna objective functions
 def rf_reg_objective(trial):
@@ -117,7 +125,7 @@ def lgbm_reg_objective(trial):
 ## ----
 ## Creating a study object and to optimize the home objective function
 study_rf = optuna.create_study(direction = 'minimize')
-study_rf.optimize(rf_reg_objective, n_trials = 50)
+study_rf.optimize(rf_reg_objective, n_trials = 100)
 
 ## Starting HistGradientBoosting
 ## ----
