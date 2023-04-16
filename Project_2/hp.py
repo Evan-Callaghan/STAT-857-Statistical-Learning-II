@@ -3,7 +3,7 @@ import pandas as pd
 
 import optuna
 from sklearn.metrics import log_loss
-from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from lightgbm import LGBMClassifier
 from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
@@ -121,7 +121,7 @@ class hist_objective:
     
 ## Defining SEED and Trials
 SEED = 42
-N_TRIALS = 100
+N_TRIALS = 300
 
 ## Defining input and target variables
 ## Defining input and target variables
